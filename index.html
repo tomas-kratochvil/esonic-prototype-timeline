@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plánovací systém - Sweet Production</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1>📋 Plánovací systém výroby</h1>
+                <span class="company-name">Sweet Production</span>
+            </div>
+            <div class="header-right">
+                <button class="btn btn-secondary" onclick="app.loadFromHelios()">
+                    🔄 Načíst z Helios
+                </button>
+                <button class="btn btn-primary" onclick="app.saveToHelios()">
+                    💾 Uložit změny
+                </button>
+                <div class="user-info">
+                    <span>👤 Plánovač</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar - Backlog -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <h2>📦 Backlog objednávek</h2>
+                    <div class="filters">
+                        <input type="text" placeholder="Hledat..." class="search-input" id="searchInput">
+                        <select class="filter-select" id="statusFilter">
+                            <option value="all">Všechny stavy</option>
+                            <option value="backlog">Backlog</option>
+                            <option value="planned">Naplánováno</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="backlog-list" id="backlogList">
+                    <!-- Backlog items will be populated by JavaScript -->
+                </div>
+            </aside>
+
+            <!-- Planning Area -->
+            <main class="planning-area">
+                <!-- Week Navigation -->
+                <div class="week-navigation">
+                    <button class="btn-icon" onclick="app.previousWeek()">◀</button>
+                    <div class="week-info">
+                        <h2 id="weekTitle">Týden 7 • 2026</h2>
+                        <span class="date-range" id="dateRange">17. 2. - 23. 2. 2026</span>
+                    </div>
+                    <button class="btn-icon" onclick="app.nextWeek()">▶</button>
+                    <button class="btn btn-secondary" onclick="app.goToToday()">📅 Dnes</button>
+                </div>
+
+                <!-- Legend -->
+                <div class="legend">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #3b82f6;"></span>
+                        <span>Podklad</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #8b5cf6;"></span>
+                        <span>Tvaroh</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #ec4899;"></span>
+                        <span>Krém</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #10b981;"></span>
+                        <span>Freezer</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color conflict" style="background: #ef4444;"></span>
+                        <span>Kolize</span>
+                    </div>
+                </div>
+
+                <!-- Planning Grid -->
+                <div class="planning-grid" id="planningGrid">
+                    <!-- Time column -->
+                    <div class="time-column">
+                        <div class="time-header">Čas</div>
+                        <div class="time-slots" id="timeSlots">
+                            <!-- Time slots will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Day columns will be populated by JavaScript -->
+                </div>
+
+                <!-- Statistics -->
+                <div class="statistics">
+                    <div class="stat-card">
+                        <div class="stat-value" id="statPlanned">0</div>
+                        <div class="stat-label">Naplánováno</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statBacklog">0</div>
+                        <div class="stat-label">Backlog</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statConflicts">0</div>
+                        <div class="stat-label">Kolizí</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statCapacity">0%</div>
+                        <div class="stat-label">Využití</div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Detail Panel (Modal) -->
+        <div class="modal" id="detailModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Detail výrobního receptu</h3>
+                    <button class="btn-close" onclick="app.closeModal()">✕</button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Detail content will be populated by JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <label>
+                        <input type="checkbox" id="lockToggle" onchange="app.toggleLock()">
+                        🔒 Příkazy uzamčeny (pohybují se společně)
+                    </label>
+                    <div class="modal-actions">
+                        <button class="btn btn-secondary" onclick="app.closeModal()">Zavřít</button>
+                        <button class="btn btn-danger" onclick="app.deleteRecipe()">🗑️ Smazat</button>
+                        <button class="btn btn-primary" onclick="app.saveChanges()">💾 Uložit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Toast -->
+        <div class="toast" id="toast">
+            <span id="toastMessage"></span>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
