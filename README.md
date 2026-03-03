@@ -83,7 +83,7 @@ Otevřete příslušný HTML soubor ve webovém prohlížeči:
    - Přidání/úprava/smazání typů
    - Nastavení: ID, název, barva, defaultní trvání
    - Visual color picker
-   - Přednastavené typy (podklad, tvaroh, krém, freezer)
+   - Přednastavené typy (pop, pon, pok, final)
 
 2. **Šablony receptů**
    - Vytváření šablon pro různé produkty
@@ -126,7 +126,7 @@ Otevřete příslušný HTML soubor ve webovém prohlížeči:
 ```javascript
 {
   id: 'P001',
-  type: 'podklad', // podklad, tvaroh, krem, freezer
+  type: 'pop', // pop, pon, pok, final
   offsetDays: -3,  // -3 dny před termínem
   duration: 2      // trvání v hodinách
 }
@@ -137,7 +137,7 @@ Otevřete příslušný HTML soubor ve webovém prohlížeči:
 {
   recipeId: 'R001',
   commandId: 'P001',
-  type: 'podklad',
+  type: 'pop',
   date: '2026-02-14',
   startHour: 8,
   duration: 2

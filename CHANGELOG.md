@@ -45,15 +45,15 @@ prototype/
 #### 📋 Typy příkazů
 - Přidání/úprava/smazání typů výrobních příkazů
 - Nastavení:
-  - ID typu (např. "podklad")
-  - Zobrazovaný název (např. "Výroba podkladu")
+  - ID typu (např. "pop")
+  - Zobrazovaný název (např. "POP")
   - Barva (color picker)
   - Defaultní trvání v hodinách
 - Defaultně přednastavené typy:
-  - Podklad (modrá, 2h)
-  - Tvaroh (fialová, 2h)
-  - Krém (růžová, 1h)
-  - Freezer (zelená, 1h)
+  - POP (modrá, 2h)
+  - PON (fialová, 2h)
+  - POK (růžová, 1h)
+  - FINAL (zelená, 1h)
 
 #### 🎯 Šablony receptů
 - Vytváření šablon pro různé typy výrobků
@@ -119,8 +119,8 @@ Administrace typů příkazů a šablon.
 // Typy příkazů
 localStorage['config_command_types'] = [
   {
-    id: 'podklad',
-    name: 'Výroba podkladu',
+    id: 'pop',
+    name: 'POP',
     color: '#3b82f6',
     defaultDuration: 2
   },
@@ -133,7 +133,7 @@ localStorage['config_recipe_templates'] = [
     id: 'standard_cake',
     name: 'Standardní dort',
     commands: [
-      { typeId: 'podklad', offsetDays: -3, duration: 2 },
+      { typeId: 'pop', offsetDays: -3, duration: 2 },
       // ...
     ]
   }

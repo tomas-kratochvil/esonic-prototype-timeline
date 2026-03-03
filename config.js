@@ -298,8 +298,8 @@ class ConfigApp {
             name,
             description,
             commands: [
-                { typeId: 'podklad', offsetDays: -3, duration: 2 },
-                { typeId: 'freezer', offsetDays: 0, duration: 1 }
+                { typeId: 'pop', offsetDays: -3, duration: 2 },
+                { typeId: 'final', offsetDays: 0, duration: 1 }
             ]
         });
 
