@@ -1,12 +1,26 @@
 # Prototyp plánovací aplikace
 
+## Stránky aplikace
+
+### 1. **index.html** - Plánovací rozhraní
+Hlavní aplikace pro plánovače s plnou funkcionalitou drag & drop.
+
+### 2. **production_view.html** - Výrobní pohled (Read-only)
+Zobrazení denního plánu pro výrobní dělníky, bez možnosti editace.
+
+### 3. **config.html** - Konfigurace
+Správa typů výrobních příkazů a šablon receptů.
+
 ## Spuštění prototypu
 
-Jednoduše otevřete soubor `index.html` ve webovém prohlížeči.
+Otevřete příslušný HTML soubor ve webovém prohlížeči:
+- **index.html** - pro plánování
+- **production_view.html** - pro výrobní displej
+- **config.html** - pro konfiguraci
 
 ## Funkce prototypu
 
-### ✅ Implementováno
+### ✅ Plánovací rozhraní (index.html)
 
 1. **Drag & Drop**
    - Přetažení receptu z backlogu do kalendáře
@@ -37,6 +51,55 @@ Jednoduše otevřete soubor `index.html` ve webovém prohlížeči.
    - Responsivní design
    - Toast notifikace
    - Zvýraznění dnešního dne
+
+### ✅ Výrobní pohled (production_view.html)
+
+1. **Read-only zobrazení**
+   - Žádná možnost editace dat
+   - Optimalizováno pro nástěnný displej
+
+2. **Timeline úkolů**
+   - Výběr dne (7 dní dopředu)
+   - Hodinový rozvrh s vizualizací úkolů
+   - Barevné rozlišení typů příkazů
+
+3. **Statusy úkolů**
+   - Čeká (šedá)
+   - Probíhá (zelená, pulzující)
+   - Dokončeno (modrá)
+
+4. **Real-time aktualizace**
+   - Aktuální čas a datum (každou sekundu)
+   - Auto-refresh každých 30 sekund
+   - Zvýraznění právě probíhajících úkolů
+
+5. **Fullscreen režim**
+   - Tlačítko pro celou obrazovku
+   - Vhodné pro permanentní zobrazení ve výrobě
+
+### ✅ Konfigurace (config.html)
+
+1. **Typy výrobních příkazů**
+   - Přidání/úprava/smazání typů
+   - Nastavení: ID, název, barva, defaultní trvání
+   - Visual color picker
+   - Přednastavené typy (podklad, tvaroh, krém, freezer)
+
+2. **Šablony receptů**
+   - Vytváření šablon pro různé produkty
+   - Definice sekvence příkazů
+   - Časové rozestupy (offsetDays)
+   - Ukázkové šablony (standardní dort, velký dort)
+
+3. **Obecné nastavení**
+   - Pracovní doba (začátek/konec)
+   - Helios API URL
+   - Auto-refresh interval
+
+4. **Perzistence dat**
+   - Ukládání do localStorage
+   - Visual indikátor uložení
+   - Sdílení dat mezi stránkami
 
 ### 🚧 Simulováno (pro demo)
 
@@ -105,6 +168,46 @@ Jednoduše otevřete soubor `index.html` ve webovém prohlížeči.
 3. Kontroluje překryv časů
 4. Zvýrazní červeně
 
+## Uživatelské role a workflow
+
+### 👨‍💼 Administrátor
+1. Otevře **config.html**
+2. Definuje typy výrobních příkazů
+3. Vytvoří šablony receptů
+4. Nastaví pracovní dobu a API
+
+### 📋 Plánovač
+1. Otevře **index.html**
+2. Načte objednávky z Helios
+3. Plánuje pomocí drag & drop
+4. Kontroluje kolize
+5. Uloží změny do Helios
+
+### 👷 Výrobní dělník
+1. Displej zobrazuje **production_view.html**
+2. Sleduje úkoly na daný den
+3. Vidí statusy (čeká/probíhá/hotovo)
+4. Automatický refresh každých 30s
+
+## Datová integrace
+
+Všechny 3 aplikace sdílejí data přes **localStorage**:
+
+```javascript
+// Konfigurační data
+localStorage['config_command_types']     // Typy příkazů
+localStorage['config_recipe_templates']  // Šablony receptů
+localStorage['config_general']           // Obecné nastavení
+
+// Plánovací data
+localStorage['planning_data']            // Recepty a naplánované úkoly
+```
+
+V produkci by localStorage byl nahrazen:
+- REST API volání do Helios
+- WebSocket pro real-time aktualizace
+- Redis/Cache vrstva pro performance
+
 ## Další kroky pro produkci
 
 1. **Backend integrace**
@@ -112,23 +215,38 @@ Jednoduše otevřete soubor `index.html` ve webovém prohlížeči.
    - Real-time synchronizace
    - Error handling
 
-2. **Rozšířené funkce**
-   - Hromadné operace
-   - Historie změn (undo/redo)
-   - Export do PDF
-   - Tisk týdenního plánu
+2. **Rozšířené funkce - Výrobní pohled**
+   - Zadávání statusů úkolů (Zahájit/Dokončit tlačítka)
+   - Push notifikace při změně plánu
+   - QR kód pro rychlý přístup
+   - Hlasové oznámení nového úkolu
 
-3. **Performance**
+3. **Rozšířené funkce - Konfigurace**
+   - Import/export konfigurace (JSON)
+   - Validace konfliktů v šablonách
+   - Vizuální editor šablon (drag & drop)
+   - Historie změn konfigurace
+
+4. **Performance**
    - Virtualizace pro 100+ položek
    - Lazy loading
    - Caching
+   - Optimalizace renderingu
 
-4. **Bezpečnost**
-   - Autentizace
-   - Role-based access
-   - Audit log
+5. **Bezpečnost**
+   - Autentizace (OAuth 2.0)
+   - Role-based access control
+   - Audit log všech operací
+   - HTTPS komunikace
 
-5. **Testování**
-   - Unit testy
+6. **Testování**
+   - Unit testy (Jest)
    - Integration testy
+   - E2E testy (Playwright)
    - UAT s uživateli
+
+7. **Multi-user support**
+   - Zamykání při editaci
+   - Conflict resolution
+   - Real-time collaborative editing
+   - User presence indicators

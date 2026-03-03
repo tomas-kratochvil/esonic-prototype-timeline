@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Výrobní plán - Sweet Production</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styles for production view */
+        .production-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .production-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .production-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .current-time {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .day-selector {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .day-button {
+            padding: 1rem 2rem;
+            border: 2px solid var(--border-color);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
+            min-width: 120px;
+        }
+
+        .day-button:hover {
+            border-color: var(--primary-color);
+            background: var(--bg-primary);
+        }
+
+        .day-button.active {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .day-button .date {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .day-button .day-name {
+            display: block;
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        .production-timeline {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .timeline-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 0;
+        }
+
+        .timeline-time {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80px;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: var(--bg-primary);
+        }
+
+        .timeline-slot {
+            position: relative;
+            height: 80px;
+            border-bottom: 1px solid var(--border-color);
+            border-left: 2px solid var(--border-color);
+        }
+
+        .timeline-item {
+            position: absolute;
+            left: 8px;
+            right: 8px;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item-id {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: white;
+        }
+
+        .timeline-item-title {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.95);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item-meta {
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .timeline-item.type-podklad { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        .timeline-item.type-tvaroh { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .timeline-item.type-krem { background: linear-gradient(135deg, #ec4899, #db2777); }
+        .timeline-item.type-freezer { background: linear-gradient(135deg, #10b981, #059669); }
+
+        .timeline-item.current {
+            border: 3px solid #fbbf24;
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(251, 191, 36, 0.8); }
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .status-pending { background: #94a3b8; }
+        .status-in-progress { background: #10b981; animation: pulse 2s infinite; }
+        .status-completed { background: #3b82f6; }
+
+        .no-tasks {
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+        }
+
+        .refresh-info {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 1rem;
+        }
+
+        .full-screen-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.2s;
+        }
+
+        .full-screen-toggle:hover {
+            transform: scale(1.1);
+            background: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="production-container">
+        <!-- Header -->
+        <div class="production-header">
+            <h1>🏭 Výrobní plán</h1>
+            <div class="current-time" id="currentTime"></div>
+            <p style="color: var(--text-secondary); margin-top: 0.5rem;">Sweet Production - Režim jen pro čtení</p>
+        </div>
+
+        <!-- Day Selector -->
+        <div class="day-selector" id="daySelector">
+            <!-- Days will be populated by JavaScript -->
+        </div>
+
+        <!-- Timeline -->
+        <div class="production-timeline">
+            <div class="timeline-header">
+                <div>
+                    <h2 id="timelineTitle">Dnešní úkoly</h2>
+                    <p style="color: var(--text-secondary); margin-top: 0.25rem;" id="timelineSubtitle"></p>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 2rem; font-weight: 700; color: var(--primary-color);" id="taskCount">0</div>
+                    <div style="font-size: 0.875rem; color: var(--text-secondary);">Úkolů dnes</div>
+                </div>
+            </div>
+
+            <div class="timeline-grid" id="timelineGrid">
+                <!-- Timeline will be populated by JavaScript -->
+            </div>
+
+            <div class="refresh-info" id="refreshInfo">
+                Automatické obnovení každých 30 sekund • Poslední aktualizace: <span id="lastUpdate">--:--</span>
+            </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend" style="margin-top: 2rem; justify-content: center;">
+            <div class="legend-item">
+                <span class="status-indicator status-pending"></span>
+                <span>Čeká</span>
+            </div>
+            <div class="legend-item">
+                <span class="status-indicator status-in-progress"></span>
+                <span>Probíhá</span>
+            </div>
+            <div class="legend-item">
+                <span class="status-indicator status-completed"></span>
+                <span>Dokončeno</span>
+            </div>
+            <div style="margin-left: 2rem;"></div>
+            <div class="legend-item">
+                <span class="legend-color" style="background: #3b82f6;"></span>
+                <span>Podklad</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background: #8b5cf6;"></span>
+                <span>Tvaroh</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background: #ec4899;"></span>
+                <span>Krém</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background: #10b981;"></span>
+                <span>Freezer</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full Screen Toggle -->
+    <button class="full-screen-toggle" onclick="toggleFullScreen()" title="Celá obrazovka">
+        ⛶
+    </button>
+
+    <script src="production_view.js"></script>
+</body>
+</html>
