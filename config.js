@@ -38,26 +38,26 @@ class ConfigApp {
             // Default command types
             this.commandTypes = [
                 {
-                    id: 'podklad',
-                    name: 'Výroba podkladu',
+                    id: 'pop',
+                    name: 'POP',
                     color: '#3b82f6',
                     defaultDuration: 2
                 },
                 {
-                    id: 'tvaroh',
-                    name: 'Příprava tvarohu',
+                    id: 'pon',
+                    name: 'PON',
                     color: '#8b5cf6',
                     defaultDuration: 2
                 },
                 {
-                    id: 'krem',
-                    name: 'Příprava krému',
+                    id: 'pok',
+                    name: 'POK',
                     color: '#ec4899',
                     defaultDuration: 1
                 },
                 {
-                    id: 'freezer',
-                    name: 'Zmražení a balení',
+                    id: 'final',
+                    name: 'FINAL',
                     color: '#10b981',
                     defaultDuration: 1
                 }
@@ -75,12 +75,12 @@ class ConfigApp {
                 {
                     id: 'standard_cake',
                     name: 'Standardní dort',
-                    description: 'Běžný dort s tvarohem a krémem',
+                    description: 'Běžný dort s PON a POK',
                     commands: [
-                        { typeId: 'podklad', offsetDays: -3, duration: 2 },
-                        { typeId: 'tvaroh', offsetDays: -2, duration: 2 },
-                        { typeId: 'krem', offsetDays: -1, duration: 1 },
-                        { typeId: 'freezer', offsetDays: 0, duration: 1 }
+                        { typeId: 'pop', offsetDays: -3, duration: 2 },
+                        { typeId: 'pon', offsetDays: -2, duration: 2 },
+                        { typeId: 'pok', offsetDays: -1, duration: 1 },
+                        { typeId: 'final', offsetDays: 0, duration: 1 }
                     ]
                 },
                 {
@@ -88,10 +88,10 @@ class ConfigApp {
                     name: 'Velký dort (2kg+)',
                     description: 'Dort s prodlouženou přípravou',
                     commands: [
-                        { typeId: 'podklad', offsetDays: -4, duration: 3 },
-                        { typeId: 'tvaroh', offsetDays: -2, duration: 3 },
-                        { typeId: 'krem', offsetDays: -1, duration: 2 },
-                        { typeId: 'freezer', offsetDays: 0, duration: 2 }
+                        { typeId: 'pop', offsetDays: -4, duration: 3 },
+                        { typeId: 'pon', offsetDays: -2, duration: 3 },
+                        { typeId: 'pok', offsetDays: -1, duration: 2 },
+                        { typeId: 'final', offsetDays: 0, duration: 2 }
                     ]
                 }
             ];

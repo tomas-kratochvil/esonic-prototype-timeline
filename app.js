@@ -70,10 +70,10 @@ class PlanningApp {
                 locked: true,
                 status: 'backlog',
                 commands: [
-                    { id: 'P001', type: 'podklad', offsetDays: -3, duration: 2 },
-                    { id: 'P002', type: 'tvaroh', offsetDays: -2, duration: 2 },
-                    { id: 'P003', type: 'krem', offsetDays: -1, duration: 1 },
-                    { id: 'P004', type: 'freezer', offsetDays: 0, duration: 1 }
+                    { id: 'P001', type: 'pop', offsetDays: -3, duration: 2 },
+                    { id: 'P002', type: 'pon', offsetDays: -2, duration: 2 },
+                    { id: 'P003', type: 'pok', offsetDays: -1, duration: 1 },
+                    { id: 'P004', type: 'final', offsetDays: 0, duration: 1 }
                 ]
             },
             {
@@ -84,10 +84,10 @@ class PlanningApp {
                 locked: true,
                 status: 'backlog',
                 commands: [
-                    { id: 'P005', type: 'podklad', offsetDays: -3, duration: 3 },
-                    { id: 'P006', type: 'tvaroh', offsetDays: -2, duration: 2 },
-                    { id: 'P007', type: 'krem', offsetDays: -1, duration: 2 },
-                    { id: 'P008', type: 'freezer', offsetDays: 0, duration: 1 }
+                    { id: 'P005', type: 'pop', offsetDays: -3, duration: 3 },
+                    { id: 'P006', type: 'pon', offsetDays: -2, duration: 2 },
+                    { id: 'P007', type: 'pok', offsetDays: -1, duration: 2 },
+                    { id: 'P008', type: 'final', offsetDays: 0, duration: 1 }
                 ]
             },
             {
@@ -98,10 +98,10 @@ class PlanningApp {
                 locked: false,
                 status: 'backlog',
                 commands: [
-                    { id: 'P009', type: 'podklad', offsetDays: -3, duration: 2 },
-                    { id: 'P010', type: 'tvaroh', offsetDays: -2, duration: 1 },
-                    { id: 'P011', type: 'krem', offsetDays: -1, duration: 2 },
-                    { id: 'P012', type: 'freezer', offsetDays: 0, duration: 1 }
+                    { id: 'P009', type: 'pop', offsetDays: -3, duration: 2 },
+                    { id: 'P010', type: 'pon', offsetDays: -2, duration: 1 },
+                    { id: 'P011', type: 'pok', offsetDays: -1, duration: 2 },
+                    { id: 'P012', type: 'final', offsetDays: 0, duration: 1 }
                 ]
             },
             {
@@ -112,10 +112,10 @@ class PlanningApp {
                 locked: true,
                 status: 'backlog',
                 commands: [
-                    { id: 'P013', type: 'podklad', offsetDays: -3, duration: 2 },
-                    { id: 'P014', type: 'tvaroh', offsetDays: -2, duration: 1 },
-                    { id: 'P015', type: 'krem', offsetDays: -1, duration: 1 },
-                    { id: 'P016', type: 'freezer', offsetDays: 0, duration: 1 }
+                    { id: 'P013', type: 'pop', offsetDays: -3, duration: 2 },
+                    { id: 'P014', type: 'pon', offsetDays: -2, duration: 1 },
+                    { id: 'P015', type: 'pok', offsetDays: -1, duration: 1 },
+                    { id: 'P016', type: 'final', offsetDays: 0, duration: 1 }
                 ]
             },
             {
@@ -126,10 +126,10 @@ class PlanningApp {
                 locked: true,
                 status: 'backlog',
                 commands: [
-                    { id: 'P017', type: 'podklad', offsetDays: -3, duration: 2 },
-                    { id: 'P018', type: 'tvaroh', offsetDays: -2, duration: 2 },
-                    { id: 'P019', type: 'krem', offsetDays: -1, duration: 1 },
-                    { id: 'P020', type: 'freezer', offsetDays: 0, duration: 1 }
+                    { id: 'P017', type: 'pop', offsetDays: -3, duration: 2 },
+                    { id: 'P018', type: 'pon', offsetDays: -2, duration: 2 },
+                    { id: 'P019', type: 'pok', offsetDays: -1, duration: 1 },
+                    { id: 'P020', type: 'final', offsetDays: 0, duration: 1 }
                 ]
             }
         ];
@@ -139,7 +139,7 @@ class PlanningApp {
             {
                 recipeId: 'R001',
                 commandId: 'P004',
-                type: 'freezer',
+                type: 'final',
                 date: '2026-02-17',
                 startHour: 8,
                 duration: 1
@@ -728,20 +728,20 @@ class PlanningApp {
 
     getTypeName(type) {
         const names = {
-            'podklad': 'Podklad',
-            'tvaroh': 'Tvaroh',
-            'krem': 'Krém',
-            'freezer': 'Freezer'
+            'pop': 'POP',
+            'pon': 'PON',
+            'pok': 'POK',
+            'final': 'FINAL'
         };
         return names[type] || type;
     }
 
     getTypeColor(type) {
         const colors = {
-            'podklad': '#3b82f6',
-            'tvaroh': '#8b5cf6',
-            'krem': '#ec4899',
-            'freezer': '#10b981'
+            'pop': '#3b82f6',
+            'pon': '#8b5cf6',
+            'pok': '#ec4899',
+            'final': '#10b981'
         };
         return colors[type] || '#6b7280';
     }

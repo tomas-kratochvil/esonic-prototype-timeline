@@ -48,7 +48,7 @@ class ProductionView {
             {
                 recipeId: 'R001',
                 commandId: 'P001',
-                type: 'podklad',
+                type: 'pop',
                 recipeName: 'Ananasový dort 1kg',
                 date: today,
                 startHour: 8,
@@ -58,7 +58,7 @@ class ProductionView {
             {
                 recipeId: 'R002',
                 commandId: 'P005',
-                type: 'podklad',
+                type: 'pop',
                 recipeName: 'Jahodový dort 2kg',
                 date: today,
                 startHour: 10,
@@ -68,7 +68,7 @@ class ProductionView {
             {
                 recipeId: 'R001',
                 commandId: 'P002',
-                type: 'tvaroh',
+                type: 'pon',
                 recipeName: 'Ananasový dort 1kg',
                 date: today,
                 startHour: 14,
@@ -78,7 +78,7 @@ class ProductionView {
             {
                 recipeId: 'R003',
                 commandId: 'P009',
-                type: 'podklad',
+                type: 'pop',
                 recipeName: 'Čokoládový dort 1.5kg',
                 date: today,
                 startHour: 16,
@@ -88,7 +88,7 @@ class ProductionView {
             {
                 recipeId: 'R002',
                 commandId: 'P006',
-                type: 'tvaroh',
+                type: 'pon',
                 recipeName: 'Jahodový dort 2kg',
                 date: tomorrow,
                 startHour: 8,
@@ -297,10 +297,10 @@ class ProductionView {
 
     getTypeName(type) {
         const names = {
-            'podklad': 'Podklad',
-            'tvaroh': 'Tvaroh',
-            'krem': 'Krém',
-            'freezer': 'Freezer'
+            'pop': 'POP',
+            'pon': 'PON',
+            'pok': 'POK',
+            'final': 'FINAL'
         };
         return names[type] || type;
     }
